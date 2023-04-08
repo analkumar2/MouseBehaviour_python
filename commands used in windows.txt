@@ -1,0 +1,13 @@
+https://arduino.github.io/arduino-cli/0.32/getting-started/
+https://eloquentarduino.com/python-arduino/
+everywhereml
+https://github.com/Renaud11232/pyduinocli
+
+
+
+./arduino-cli core update-index
+./arduino-cli board list
+./arduino-cli core install arduino:avr
+./arduino-cli sketch new MyFirstSketch
+.\arduino-cli compile --fqbn arduino:avr:uno .\MyFirstSketch\
+.\arduino-cli upload -p COM4 --fqbn arduino:avr:uno .\MyFirstSketch\
