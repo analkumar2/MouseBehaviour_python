@@ -49,6 +49,7 @@ while True:
         ret, frame = cap.read()
         if ret==True:
             out.write(frame)
+            cv2.imshow('camera', frame)
 
     if data == 0 and internalswitch == 1: #If arduino asks to stop recording but camera was recording
         internalswitch = 0 
