@@ -25,12 +25,12 @@ data = 0
 internalswitch = 0
 outputnum = iter(np.arange(0,10,1)) #Trial number. Iter so that new files can be created with proper numbering
 while True:
-    print('waiting for signal')
-    print(data,internalswitch)
     if ser.isOpen(): #read the serial port
         data = ser.readline().decode().strip() #read the serial port and store into data
         print(f'rawdata = {data}')
         data = int(data) #convert data into integer
+        message = input()
+        ser.write(message.encode())
     if data == 1 and internalswitch == 0: #If arduino asks to start recording but camera was not recording
         print('starting recording')
         internalswitch = 1 #keeps track of whether the recording is going on or not

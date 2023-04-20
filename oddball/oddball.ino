@@ -1,4 +1,6 @@
-const int tonePin = 13;
+const int tonePin = 8;
+long randNumber;
+bool hasitstarted = false;
 
 void setup() {
   pinMode(tonePin, OUTPUT);
@@ -6,19 +8,74 @@ void setup() {
 }
 
 void loop() {
-  // unsigned starttime = millis();
-  // while (millis() - starttime < 100) { // we need to do this because laptop is not a RTOS and sometimes process the incoming signals late
-    Serial.println(1); // sends signal to the laptop to start recording
-  // }
+  if (hasitstarted == false) {
+    if (Serial.available() > 0) {
+      // Read the message from the serial port
+      char message = Serial.read();
 
-  digitalWrite(tonePin, HIGH);  // turn the LED on (HIGH is the voltage level)
-  delay(100);                      // wait for a second
-  digitalWrite(tonePin, LOW);   // turn the LED off by making the voltage LOW
-  delay(100);
+      // Perform an action based on the received message
+      if (message == 's') {
+        // unsigned starttime = millis();
+        // while (millis() - starttime < 100) { // we need to do this because laptop is not a RTOS and sometimes process the incoming signals late
+          Serial.println(1); // sends signal to the laptop to start recording
+        // }
 
-  // starttime = millis();
-  // while (millis() - starttime < 100){ // we need to do this because laptop is not a RTOS and sometimes process the incoming signals late
-    Serial.println(0); // sends signal to the laptop to stop recording
-  // }
-  delay(1); // A delay. Not sure if this is absolutely needed or not
+        randNumber = random(30,80);
+        for (int i=0; i<randNumber; i++) {
+          tone(tonePin, tone_freq, 50);
+          delay(150);
+        }
+        tone(tonePin, dev_freq, 50);
+        delay(150);
+        randNumber = random(30,80);
+        for (int i=0; i<randNumber; i++) {
+          tone(tonePin, tone_freq, 50);
+          delay(150);
+        }
+
+        // starttime = millis();
+        // while (millis() - starttime < 100){ // we need to do this because laptop is not a RTOS and sometimes process the incoming signals late
+          Serial.println(0); // sends signal to the laptop to stop recording
+        // }
+        delay(1); // A delay. Not sure if this is absolutely needed or not
+        hasitstarted = true;
+      }
+    }
+  }
+  else if (hasitstarted == true) {
+    if (Serial.available() > 0) {
+      // Read the message from the serial port
+      char message = Serial.read();
+
+      // Perform an action based on the received message
+      if (message == 'q') {
+        hasitstarted = false;
+      }
+    }
+    else {
+      // unsigned starttime = millis();
+      // while (millis() - starttime < 100) { // we need to do this because laptop is not a RTOS and sometimes process the incoming signals late
+        Serial.println(1); // sends signal to the laptop to start recording
+      // }
+
+      randNumber = random(30,80);
+      for (int i=0; i<randNumber; i++) {
+        tone(tonePin, tone_freq, 50);
+        delay(150);
+      }
+      tone(tonePin, dev_freq, 50);
+      delay(150);
+      randNumber = random(30,80);
+      for (int i=0; i<randNumber; i++) {
+        tone(tonePin, tone_freq, 50);
+        delay(150);
+      }
+
+      // starttime = millis();
+      // while (millis() - starttime < 100){ // we need to do this because laptop is not a RTOS and sometimes process the incoming signals late
+        Serial.println(0); // sends signal to the laptop to stop recording
+      // }
+      delay(1); // A delay. Not sure if this is absolutely needed or not
+    }
+  }
 }
